@@ -4,8 +4,9 @@
 # UPDATED: 2024-07-20 11:45
 # HOST: 0
 # HOST-KEYWORD: 0
-# HOST-SUFFIX: 1
+# HOST-SUFFIX: 2
 # IP-ASN: 0
 # IP-CIDR: 0
-# TOTAL: 1
-HOST-SUFFIX,pincong.rocks,OwnSharding
+# TOTAL: 2
+HOST-SUFFIX,ke.com,OwnSharding
+HOST-SUFFIX,lianjia.com,OwnSharding
