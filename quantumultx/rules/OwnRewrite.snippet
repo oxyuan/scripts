@@ -1,0 +1,33 @@
+# NAME: OwnRewrite
+# AUTHOR: oxyuan
+# REPO: https://github.com/oxyuan/scripts
+# UPDATED: 2026-10-06 14:40
+# DESC: Quantumult X 个人自定义重写规则（含 MITM 主机名）
+# NOTE: 本文件为个人维护的唯一本地重写配置来源，请在 [rewrite_remote] 中置于首行。
+#       远程重写资源文件格式：可选一行 hostname，其后为 url 重写规则。
+######################################################################
+
+# ===== MITM 主机名（本地重写规则必须在此声明，否则规则不会生效）=====
+hostname = api-adx.52qumao.com, api-cfg.52qumao.com, a6-remad.qm989.com, mobads.baidu.com, api.weibo.cn, bootpreload.uve.weibo.com, h5.sinaimg.cn, m.91banzhu.store, api.m.jd.com
+
+# ===== 52qumao 去广告 =====
+^https:\/\/api-adx\.52qumao\.com\/v1\/get-bz-ads\/index url reject-dict
+^https:\/\/api-cfg\.52qumao\.com\/v1\/ad\/config url reject-dict
+
+# ===== qm989 去广告 =====
+^https:\/\/a6-remad\.qm989\.com\/v4\/get-ads\/index url reject
+
+# ===== 百度联盟广告 =====
+^https:\/\/mobads\.baidu\.com\/cpro\/ui\/mads\.php url reject
+
+# ===== 微博去广告（补充 fmz200/weibo.snippet 未覆盖的部分）=====
+^https:\/\/api\.weibo\.cn\/2\/logservice\/attach url reject-dict
+^https:\/\/api\.weibo\.cn\/2\/!\/multimedia\/video\/red_package\/grow_follower\/active_uids url reject-dict
+^https:\/\/bootpreload\.uve\.weibo\.com\/v2\/ad\/preload url reject-dict
+
+# ===== 新浪 / 91版主 广告位 =====
+^https:\/\/h5\.sinaimg\.cn\/upload\/100\/953\/2020\/04\/13\/redicon_dark\.png url reject-dict
+^http:\/\/m\.91banzhu\.store\/js\/js4\.js url reject-dict
+
+# ===== 京东比价（历史价格）=====
+^https?://api\.m\.jd\.com/(client\.action|api)\?functionId=(wareBusiness|serverConfig|basicConfig|lite_wareBusiness|pingou_item) url script-response-body https://raw.githubusercontent.com/Tartarus2014/Script/master/jdjf_price.js

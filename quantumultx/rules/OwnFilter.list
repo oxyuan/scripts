@@ -1,0 +1,69 @@
+# NAME: OwnFilter
+# AUTHOR: oxyuan
+# REPO: https://github.com/oxyuan/scripts
+# UPDATED: 2026-10-06 14:40
+# DESC: Quantumult X 个人自定义分流规则（含局域网/直连/指定策略组）
+# NOTE: 本文件为个人维护的唯一本地分流配置来源，请在 [filter_remote] 中置于首行，
+#       以保证个人规则优先于第三方分流资源匹配。
+#
+# 规则语法参考：
+#   host,         完整域名匹配        host, www.google.com, proxy
+#   host-suffix,  域名后缀匹配        host-suffix, googleapis.com, proxy
+#   host-keyword, 域名关键词匹配      host-keyword, adsite, reject
+#   host-wildcard,域名通配符匹配      host-wildcard, *.goo?le.com, proxy
+#   user-agent,   UA 匹配            user-agent, ?abc*, proxy
+#   ip-cidr,      IP 段匹配          ip-cidr, 10.0.0.0/8, direct
+#   final,        兜底策略（QX 要求必须存在于本地 [filter_local] 中，故不在此文件）
+#
+# 内置策略：direct（直连）/ proxy（当前节点）/ reject（拒绝）
+######################################################################
+
+# ===== 本机 / 局域网 / 保留地址（必须直连）=====
+ip-cidr, 10.0.0.0/8, direct
+ip-cidr, 127.0.0.0/8, direct
+ip-cidr, 172.16.0.0/12, direct
+ip-cidr, 192.168.0.0/16, direct
+ip-cidr, 224.0.0.0/24, direct
+
+# ===== 订阅 / 节点管理（保证订阅与节点可用性检测直连）=====
+host-suffix, nexuscloud.li, direct
+host-suffix, sub1.sntp.me, direct
+host, 0xwfgsite.ccwu.cc, direct
+
+# ===== AI / 大模型（国内可直连的走直连，避免绕路）=====
+host-keyword, deepseek, direct
+host-suffix, kimi.com, direct
+host, kimi.moonshot.cn, direct
+host, ark.cn-beijing.volces.com, direct
+host-suffix, doubao.com, direct
+host-suffix, openspeech.bytedance.com, direct
+host-suffix, launchdarkly.com, direct
+
+# ===== 微软账号 / 办公 =====
+host-suffix, live.com, direct
+host-suffix, outlook.com, direct
+host-suffix, office365.com, direct
+
+# ===== 国内生活服务 =====
+host-suffix, meituan.com, direct
+host-suffix, alicdn.com, direct
+host-suffix, meican.com, direct
+host-suffix, ke.com, direct
+host-suffix, lianjia.com, direct
+
+# ===== 券商 / 金融 =====
+host-suffix, api.lbkrs.com, proxy
+host-suffix, api-gl.lbkrs.com, proxy
+host-suffix, schwab.com, direct
+
+# ===== 指定策略组（按业务分流）=====
+host-suffix, polymarket.com, 香港节点
+host-keyword, missav, 全球加速
+host-keyword, hanime1.me, 国际媒体
+host-keyword, z-library, 全球加速
+host, linux.do, 全球加速
+host, glarity.app, 全球加速
+host, felo.ai, 全球加速
+
+# ===== 其他 =====
+host-suffix, cloudflare.com, direct
