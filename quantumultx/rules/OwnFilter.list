@@ -1,10 +1,11 @@
 # NAME: OwnFilter
 # AUTHOR: oxyuan
 # REPO: https://github.com/oxyuan/scripts
-# UPDATED: 2026-10-06 14:40
+# UPDATED: 2026-10-23
 # DESC: Quantumult X 个人自定义分流规则（含局域网/直连/指定策略组）
 # NOTE: 本文件为个人维护的唯一本地分流配置来源，请在 [filter_remote] 中置于首行，
 #       以保证个人规则优先于第三方分流资源匹配。
+#       敏感条目（自建服务器 IP 等）不入库，写在 QX 配置文件的 [filter_local] 中。
 #
 # 规则语法参考：
 #   host,         完整域名匹配        host, www.google.com, proxy
@@ -24,6 +25,11 @@ ip-cidr, 127.0.0.0/8, direct
 ip-cidr, 172.16.0.0/12, direct
 ip-cidr, 192.168.0.0/16, direct
 ip-cidr, 224.0.0.0/24, direct
+
+# ===== 自建服务器（SSH 等管理端口直连）=====
+# 自建服务器的 IP 属于个人敏感信息，不入库：规则写在 Quantumult X 配置文件的
+# 本地 [filter_local] 中（本地规则优先级高于所有远程资源，无需在此重复）。
+# 详见 quantumultx/README.md「敏感信息」一节。
 
 # ===== 订阅 / 节点管理（保证订阅与节点可用性检测直连）=====
 host-suffix, nexuscloud.li, direct

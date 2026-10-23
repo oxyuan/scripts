@@ -31,9 +31,27 @@ https://raw.githubusercontent.com/oxyuan/scripts/main/quantumultx/rules/OwnRewri
 
 ## 生效范围说明
 
-- `[filter_local]` 中只保留 `final, 兜底分流`（Quantumult X 要求兜底策略必须存在于本地）。
+- `[filter_local]` 中只保留 `final, 兜底分流`（Quantumult X 要求兜底策略必须存在于本地）
+  以及**敏感规则**（见下节）。
 - `[rewrite_local]`、`[mitm] hostname` 中的个人规则已全部迁移至本目录。
-- 局域网 `ip-cidr` 直连规则也放在 `OwnFilter.list` 中统一维护。
+- 局域网 / 保留地址的 `ip-cidr` 直连规则放在 `OwnFilter.list` 中统一维护。
+
+## 敏感信息
+
+以下内容**只存在于本地 Quantumult X 配置文件**（`[filter_local]`），不进入本仓库：
+
+- 自建服务器 / VPS 的公网 IP（及任何私人 IP、内网网段、主机名）
+- 订阅链接中的 token、节点密码、私钥
+
+判断标准：一旦泄漏会暴露「我是谁 / 我的服务器在哪 / 我的凭据」的内容，一律不入库。
+本仓库的规则文件因此可以安全公开，clone 者按需自行补充。
+
+```ini
+[filter_local]
+ip-cidr, <自建服务器 IP>/32, direct   # 代理节点封禁 22 端口，SSH 必须直连
+final, 兜底分流
+```
+
 
 ## 更新流程
 
@@ -46,3 +64,5 @@ git push
 ```
 
 Quantumult X 端在 `设置 → 分流 / 重写 → 规则资源 → 全部更新` 拉取最新规则。
+
+> ⚠️ 提交信息中同样不要出现 IP、域名、token——它和文件内容一样会留在公开的提交历史里。
