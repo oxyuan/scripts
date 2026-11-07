@@ -24,7 +24,7 @@ ip-cidr, 10.0.0.0/8, direct
 ip-cidr, 127.0.0.0/8, direct
 ip-cidr, 172.16.0.0/12, direct
 ip-cidr, 192.168.0.0/16, direct
-ip-cidr, 224.0.0.0/24, direct
+ip-cidr, 224.0.0.0/4, direct
 
 # ===== 自建服务器（SSH 等管理端口直连）=====
 # 自建服务器的 IP 属于个人敏感信息，不入库：规则写在 Quantumult X 配置文件的
