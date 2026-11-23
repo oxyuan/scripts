@@ -29,6 +29,26 @@ https://raw.githubusercontent.com/oxyuan/scripts/main/quantumultx/rules/OwnRewri
 >
 > ⚠️ `opt-parser=false`：本仓库文件已是 Quantumult X 原生格式，无需资源解析器转换。
 
+## 策略组（`[policy]`）
+
+策略组无法通过远程资源下发，只能写在 Quantumult X 配置文件的 `[policy]` 段（本地维护）。
+本仓库规则引用以下策略组名，名称必须与配置文件完全一致：
+
+| 策略组 | 类型 | 说明 |
+| --- | --- | --- |
+| `代理选择` | static | **通用代理出口**。`OwnFilter.list` 中所有“需要走代理”的业务域都指向它，不再使用内置 `proxy` |
+| `全球加速` / `国际媒体` / `兜底分流` | static | 既有业务分流组 |
+
+```ini
+[policy]
+# 通用代理出口：默认跟「自动选择」（延迟择优，节点挂掉自动换），也可在 QX 策略页手动改为任一节点/组
+static=代理选择, 自动选择, 香港节点, 台湾节点, 日本节点, 狮城节点, 美国节点, Malaysia, direct, img-url=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Proxy.png
+```
+
+> ⚠️ 不要用内置 `proxy` 写分流规则：`proxy` 固定指向「主界面当前选中的单个节点」，
+> 该节点不可用时流量直接断掉，且与业务语义无关。需要固定走某个出口时，新增/修改策略组，
+> 让规则指向策略组，再由策略组决定出口。
+
 ## 生效范围说明
 
 - `[filter_local]` 中只保留 `final, 兜底分流`（Quantumult X 要求兜底策略必须存在于本地）

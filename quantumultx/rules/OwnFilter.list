@@ -1,7 +1,7 @@
 # NAME: OwnFilter
 # AUTHOR: oxyuan
 # REPO: https://github.com/oxyuan/scripts
-# UPDATED: 2026-10-23
+# UPDATED: 2026-11-23
 # DESC: Quantumult X 个人自定义分流规则（含局域网/直连/指定策略组）
 # NOTE: 本文件为个人维护的唯一本地分流配置来源，请在 [filter_remote] 中置于首行，
 #       以保证个人规则优先于第三方分流资源匹配。
@@ -17,6 +17,8 @@
 #   final,        兜底策略（QX 要求必须存在于本地 [filter_local] 中，故不在此文件）
 #
 # 内置策略：direct（直连）/ proxy（当前节点）/ reject（拒绝）
+# ⚠️ 本文件不使用 proxy：proxy 写死「主界面当前选中的单个节点」，节点失效即断流。
+#    需要走代理由业务域一律指向策略组「代理选择」（QX [policy] 中定义，可手动改指向）。
 ######################################################################
 
 # ===== 本机 / 局域网 / 保留地址（必须直连）=====
@@ -58,8 +60,8 @@ host-suffix, ke.com, direct
 host-suffix, lianjia.com, direct
 
 # ===== 券商 / 金融 =====
-host-suffix, api.lbkrs.com, proxy
-host-suffix, api-gl.lbkrs.com, proxy
+host-suffix, api.lbkrs.com, 代理选择
+host-suffix, api-gl.lbkrs.com, 代理选择
 host-suffix, schwab.com, direct
 
 # ===== 指定策略组（按业务分流）=====
